@@ -14,6 +14,6 @@ if __name__ == "__main__":
     pr.wait()
     print("adding CNAME")
     with open(os.path.join(build_dir, "CNAME"), "w") as f:
-        f.write("cryptex.pycode.tk")
+        f.write("crypt.pycode.tk")
     print("copying 404.html")
     shutil.copyfile("404.html", os.path.join(build_dir, "404.html"))
