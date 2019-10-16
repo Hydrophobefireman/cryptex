@@ -1,11 +1,14 @@
 import {
   FileDropAcceptorLazy,
-  WorkerListenerLazy
+  WorkerListenerLazy,
+  MimeTypesJson
 } from "../../perf/lazyLoader.js";
 import { exportPromise } from "../../exportPromise.js";
 import WebpackWorker from "worker-loader!../../workers/decryption-worker.js";
-import { h } from "../../@ui/ui-lib.js";
+import { h, Fragment } from "../../@ui/ui-lib.js";
 import downloadSVG from "../../download.svg";
+let json = MimeTypesJson.promise();
+const getJson = async json => await json;
 
 /**
  * @type {Worker}
@@ -49,13 +52,25 @@ function defaultExport(FileDropAcceptor) {
       const decrypted = await listener.waitFor(
         FileDropAcceptor.WORKER_RESPONSES.file
       );
+      const ft = await this._getFileType();
       this.setState({
+        fileType: ft,
         hasResult: FileDropAcceptor._getBlob(
           decrypted.file,
-          this.state._fileType /**@todo */ || "application/octet-stream"
+          ft /**@todo */ || "application/octet-stream"
         )
       });
     };
+    async _getFileType() {
+      const nm = this.state.file.name;
+      const _ = nm ? nm.split(".") : ["download"];
+      const f = _.length;
+      const maybeFileExt = _[f - 2];
+      const js = await getJson(json);
+      console.log(js);
+      return js[maybeFileExt] || "application/octet-stream";
+    }
+    __inlineTypes = ["image", "text", "video", "audio"];
     _gotResult() {
       const nm = this.state.file.name;
       const _ = nm ? nm.split(".") : ["download"];
@@ -81,7 +96,18 @@ function defaultExport(FileDropAcceptor) {
           "a",
           { href: this.state.hasResult, download: downloadName },
           h("button", { class: "start-app-action " }, "Download")
-        )
+        ),
+        this.__inlineTypes.some(x => this.state.fileType.includes(x))
+          ? h(
+              Fragment,
+              null,
+              h("div", null, "Preview:"),
+              h("iframe", {
+                src: this.state.hasResult,
+                style: { display: "block", width: "50%", margin: "auto" }
+              })
+            )
+          : null
       );
     }
   };

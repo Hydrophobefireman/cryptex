@@ -23,3 +23,8 @@ export const WorkerListenerLazy = {
   promise: () => import("../workerListener.js").then(getDefault),
   name: "WorkerListener"
 };
+
+export const MimeTypesJson = {
+  promise: () => import("../mimes.json").then(getDefault),
+  name: ""
+};
