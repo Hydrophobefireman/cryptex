@@ -1,0 +1,10 @@
+{
+  "supports": [
+    {
+      "algo": "AES-GCM",
+      "displayName": "AES",
+      "keyImportID": "AES-GCM-CHUNK",
+      "description": "AES in Galois/Counter Mode"
+    }
+  ]
+}
