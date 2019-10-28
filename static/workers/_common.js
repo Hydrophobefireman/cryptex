@@ -25,22 +25,6 @@ const tenLetters = k => {
   while (k.length !== COUNT) k = `0${k}`;
   return k;
 };
-const _getNumber = n => {
-  const ZERO = "0";
-  const c = `${n}`;
-  const arr = [];
-  let isStart0 = true;
-  for (const i of c) {
-    if (i === ZERO) {
-      if (!isStart0) {
-        arr.push(i);
-      } else {
-        if (isStart0) isStart0 = false;
-        arr.push(i);
-      }
-    }
-  }
-};
 
 export class Manager {
   static _encodeString(str) {
