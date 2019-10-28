@@ -2,6 +2,7 @@ import { h, Router, loadURL, Fragment } from "../../@ui/ui-lib";
 import PrefetchLinkModules from "../../perf/PrefetchResourcesWhenFree.js";
 import { FileEncryptorLazy, FileDecryptorLazy } from "../../perf/lazyLoader.js";
 import svg from "../../key.svg";
+import { displayName, startAppAction, flex } from "../../css-data";
 export function LandingComponent() {
   const params = new URLSearchParams(Router.getQs);
   let c;
@@ -11,11 +12,7 @@ export function LandingComponent() {
   return h(
     Fragment,
     null,
-    h(
-      "div",
-      { class: "landing-desc" },
-      "Encrypt or decrpt files in your browser"
-    ),
+    h("div", null, "Encrypt or decrpt files in your browser"),
     h(
       PrefetchLinkModules,
       { href: "/encrypt", fetchPromise: FileEncryptorLazy.promise },
@@ -31,7 +28,7 @@ export function LandingComponent() {
 }
 
 function LoadButton({ children }) {
-  return h("button", { class: "start-app-action hoverable" }, children);
+  return h("button", { class: `${startAppAction} hoverable` }, children);
 }
 const cfg = window.__fshare.cfg;
 function FeatList() {
@@ -45,12 +42,12 @@ function FeatList() {
         { "data-cx": JSON.stringify(x) },
         h(
           "div",
-          { class: "flex" },
+          { class: flex },
           h("div", {
             class: "revs-h",
             style: { backgroundImage: `url(${svg})` }
           }),
-          h("div", { class: "display-name" }, x.displayName)
+          h("div", { class: displayName }, x.displayName)
         ),
         h("div", { description: "" }, x.description)
       )

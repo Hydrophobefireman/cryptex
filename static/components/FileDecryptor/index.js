@@ -8,6 +8,7 @@ import WebpackWorker from "worker-loader!../../workers/decryption-worker.js";
 import { h, Fragment } from "../../@ui/ui-lib.js";
 import downloadSVG from "../../download.svg";
 let json = MimeTypesJson.promise();
+import { svgBoxDiv, fileNameDownload, startAppAction } from "../../css-data";
 const getJson = async json => await json;
 
 /**
@@ -67,7 +68,6 @@ function defaultExport(FileDropAcceptor) {
       const f = _.length;
       const maybeFileExt = _[f - 2];
       const js = await getJson(json);
-      console.log(js);
       return js[maybeFileExt] || "application/octet-stream";
     }
     __inlineTypes = ["image", "text", "video", "audio"];
@@ -83,19 +83,19 @@ function defaultExport(FileDropAcceptor) {
           style: {
             backgroundImage: `url(${downloadSVG})`
           },
-          class: "svg-box-div"
+          class: svgBoxDiv
         }),
         h("div", null, "Your file is ready"),
         h(
           "div",
           null,
           "File:",
-          h("span", { class: "file-name-download" }, downloadName)
+          h("span", { class: fileNameDownload }, downloadName)
         ),
         h(
           "a",
           { href: this.state.hasResult, download: downloadName },
-          h("button", { class: "start-app-action " }, "Download")
+          h("button", { class: startAppAction }, "Download")
         ),
         this.__inlineTypes.some(x => this.state.fileType.includes(x))
           ? h(

@@ -4,6 +4,16 @@ import fileIcon from "../../gotFile.svg";
 const hasDrop = "ondrop" in HTMLElement.prototype;
 import { WORKER_RESPONSES, WORKER_COMMANDS } from "../../common.js";
 import assign from "@hydrophobefireman/j-utils/@build-modern/src/modules/Object/assign.js";
+import {
+  dashedBorder,
+  keyGenEnter,
+  svgBoxDiv,
+  startAppAction,
+  fileHandler,
+  fileDetails,
+  itemL,
+  clicker
+} from "../../css-data";
 const aptSize = a => {
   const b = 0 | (a / 1048576);
   if (b) return `${b} MB`;
@@ -32,7 +42,8 @@ export default class FileDropAcceptor extends Component {
       reader.readAsArrayBuffer(this.state.file);
     });
   }
-  errState = k => this.setState({ hasError: true, errType: k });
+  errState = k =>
+    this.setState({ hasError: true, errType: k, isWorking: false });
   ERROR_MESSAGES = {
     invalidMethod: "Please Select a Valid Method",
     noKey: "Please Enter your Key",
@@ -79,17 +90,17 @@ export default class FileDropAcceptor extends Component {
     hasDrop &&
       h(
         "div",
-        { class: "dashed-border", ...this.getEventListeners() },
+        { class: dashedBorder, ...this.getEventListeners() },
         h("div", {
-          class: "attach-icon",
+          class: attachIcon,
           style: {
-            backgroundImage: `url(${attachIcon})`
+            backgrouclassndImage: `url(${attachIcon})`
           }
         }),
         "Drag & drop or ",
         h(
           "span",
-          { class: "hoverable clicker", onClick: this._fromFilePicker },
+          { class: "hoverable " + clicker, onClick: this._fromFilePicker },
           "Select a file"
         )
       )
@@ -109,7 +120,7 @@ export default class FileDropAcceptor extends Component {
       null,
       h("input", {
         value: this.state.key,
-        class: "key-gen-enter",
+        class: keyGenEnter,
         placeHolder: "Enter key",
         onInput: this._keyInput
       }),
@@ -130,7 +141,7 @@ export default class FileDropAcceptor extends Component {
       "div",
       {},
       h("div", {
-        class: "svg-box-div",
+        class: svgBoxDiv,
         style: {
           backgroundImage: `url(${fileIcon})`
         }
@@ -141,8 +152,8 @@ export default class FileDropAcceptor extends Component {
         "button",
         {
           class: [
-            "start-app-action",
-            this.state.isWorking && !this.state.hasError ? "file-handler" : ""
+            startAppAction,
+            this.state.isWorking && !this.state.hasError ? fileHandler : ""
           ],
           onClick: !this.state.isWorking ? this._handleClick : null
         },
@@ -173,11 +184,11 @@ function _parseProp(k, x) {
 function extractDetails({ data: file }) {
   return h(
     "div",
-    { class: "file-details" },
+    { class: fileDetails },
     ["name", "lastModifiedDate", "size", "type"].map(x =>
       h(
         "div",
-        { class: "item-l" },
+        { class: itemL },
         h("div", { class: "prop k" }, x),
         h("div", { class: "prop v" }, _parseProp(x, file[x]))
       )

@@ -1,4 +1,4 @@
-import "./App.css";
+import "./_App.css";
 import {
   h,
   render,
@@ -8,13 +8,15 @@ import {
 } from "./@ui/ui-lib.js";
 import { LandingComponent } from "./components/Landing/Landing.js";
 import { FileEncryptorLazy, FileDecryptorLazy } from "./perf/lazyLoader.js";
+import { appRoot, titleHeader } from "./css-data.js";
+import loadCSS from "@hydrophobefireman/j-utils/@build-modern/src/modules/loadCSS/index.js";
 const root = document.getElementById("app-root");
 root.removeAttribute("style");
-
+root.id = appRoot;
 const App = h(
   "main",
   { data: "app" },
-  h("header", { class: "title-header" }, "Cryptex"),
+  h("header", { class: titleHeader }, "Cryptex"),
   h(
     "div",
     { style: { marginTop: "50px" } },
@@ -39,7 +41,9 @@ const App = h(
 );
 
 render(App, root);
-
+document.addEventListener("DOMContentLoaded", () =>
+  loadCSS("https://fonts.pycode.tk/open-sans.css")
+);
 function LoaderDescription({ children }) {
-  return h("div", { class: "loader-desc" }, "Loading Chunk:", children);
+  return h("div", null, "Loading Chunk:", children);
 }

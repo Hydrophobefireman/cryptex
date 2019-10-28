@@ -2,7 +2,6 @@ const { minify } = require("terser");
 module.exports = minify(
   `(${function() {
     var e = document.createElement("script");
-
     if ("onbeforeload" in e) {
       var t = !1;
       document.addEventListener(

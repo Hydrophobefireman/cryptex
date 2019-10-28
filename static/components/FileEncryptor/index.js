@@ -6,7 +6,7 @@ import {
 import WebpackWorker from "worker-loader!../../workers/encryption-worker.js";
 import { h } from "../../@ui/ui-lib.js";
 import downloadSVG from "../../download.svg";
-
+import { svgBoxDiv, fileNameDownload, startAppAction } from "../../css-data";
 /**
  * @type {Worker}
  */
@@ -40,7 +40,7 @@ function defaultExport(FileDropAcceptor) {
         "div",
         null,
         h("div", {
-          class: "svg-box-div",
+          class: svgBoxDiv,
           style: {
             backgroundImage: `url(${downloadSVG})`
           }
@@ -50,12 +50,12 @@ function defaultExport(FileDropAcceptor) {
           "div",
           null,
           "File:",
-          h("span", { class: "file-name-download" }, downloadName)
+          h("span", { class: fileNameDownload }, downloadName)
         ),
         h(
           "a",
           { href: this.state.hasResult, download: downloadName },
-          h("button", { class: "start-app-action " }, "Download")
+          h("button", { class: startAppAction }, "Download")
         )
       );
     }

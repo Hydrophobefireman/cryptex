@@ -3,6 +3,8 @@ const minifier = require("terser-webpack-plugin"),
   MiniCssExtractPlugin = require("mini-css-extract-plugin"),
   autoPrefixPlugin = require("autoprefixer"),
   StyleExtHtmlWebpackPlugin = require("style-ext-html-webpack-plugin");
+const dssJS = require("dss-js");
+const defaultCSS = require("./static/app-unprocessed-css.js");
 const BabelMultiTargetPlugin = require("webpack-babel-multi-target-plugin")
   .BabelMultiTargetPlugin;
 const mode = "development";
@@ -11,6 +13,8 @@ const devOrProd = (a, b) => {
   return "production" === mode ? a : b;
 };
 
+dssJS.evaluate(defaultCSS, "./static/_App.css");
+dssJS.getGlueCode("./static/css-data.js");
 module.exports = {
   devServer: {
     contentBase: `${__dirname}/docs`,
