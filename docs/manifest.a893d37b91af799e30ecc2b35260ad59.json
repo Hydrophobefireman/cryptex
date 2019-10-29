@@ -1,0 +1,58 @@
+{
+  "icons": [
+    {
+      "src": "icon_512x512.538586621fee8722384f8e837e09daae.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_384x384.361f467d532aeba612d631c454c77e79.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_256x256.f464a15d79713c2797b7f829c4af3169.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_192x192.63f1ef4b9959d6dc29e9f2ea353aceaf.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_152x152.f3ca9a52020634139a9745c9716f4f03.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_144x144.32667cf7d3bfecad0cc1d0ba91ca3d97.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_128x128.aeded99e80f0adf2b881bc2689279bb8.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_96x96.320221a7dbe3bd2a3e0cacd7566e0ffa.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_72x72.aa4bc9823f3de9d417c3e2c080b982ba.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    }
+  ],
+  "name": "cryptex",
+  "short_name": "cryptex",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": "/",
+  "background_color": "#e3e3e3",
+  "description": "Client Side File Encryption",
+  "lang": "en",
+  "theme_color": "#1976d2"
+}

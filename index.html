@@ -4,22 +4,20 @@
     <meta charset="utf-8" />
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
     <title>Cryptex</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <meta
       name="description"
       content="Local Device based File And text Encryption"
     />
     <link rel="preconnect" href="https://fonts.pycode.tk/" />
+    <script data-js="sw">
+      <%=require("./injectables/swmanager.js")%>
+    </script>
     <script data-js="init">
       window.__fshare = window.__fshare || {};
     </script>
-    <script data-js="nomodule-fix">
-      <%=require("./injectables/nomodulefix.js")%>
-    </script>
-    <script data-js="Set-polyfill">
-      <%=require("./injectables/Set.js")%>
-    </script>
-    <script data-js="link-prefetch">
-      <%=require("./injectables/link-prefetch.js")%>
+    <script id="webpack-build-json" type="application/json">
+      <%=JSON.stringify(webpack.assets.map(x=>x.name))%>
     </script>
     <script data-js="dynamic-import-polyfill">
       window.__fshare.__getImport=<%= require("./injectables/htmlGenerator.js").importPolyFill %>;
@@ -29,11 +27,6 @@
       <%=require('./injectables/support-cfg.js')%>
       window.__fshare.setConfig(<%=JSON.stringify(JSON.stringify(require("./injectables/cfg.json")))%>)
     </script>
-    <link
-      rel="preload"
-      href="https://fonts.pycode.tk/open-sans.css"
-      as="style"
-    />
     <base href="/" />
     <meta content="width=device-width,initial-scale=1" name="viewport" />
   </head>
@@ -42,8 +35,6 @@
     <div id="app-root" style="display: none"></div>
     <noscript>This Application uses JavaScript..</noscript>
     <%=
-    require("./injectables/htmlGenerator.js").generatePrefetch(webpack.assetsByChunkName)
-    %> <%=
     require("./injectables/htmlGenerator.js").generateScripts(htmlWebpackPlugin.files.chunks)
     %>
     <script data-js="prefetch-strategy-config">

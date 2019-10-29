@@ -7,7 +7,7 @@ export function LandingComponent() {
   return h(
     Fragment,
     null,
-    h("div", null, "Encrypt or decrpt files in your browser"),
+    h("div", null, "Encrypt or decrypt files in your browser"),
     h(
       PrefetchLinkModules,
       { href: "/encrypt", fetchPromise: FileEncryptorLazy.promise },
