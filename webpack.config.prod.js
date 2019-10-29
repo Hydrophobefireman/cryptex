@@ -103,6 +103,7 @@ module.exports = {
         !1
       )
     }),
+
     new WebpackPwaManifest({
       background_color: "#e3e3e3",
       description: "Client Side File Encryption",
