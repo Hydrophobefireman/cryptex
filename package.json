@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
-    "@hydrophobefireman/j-utils": "^2.0.1"
+    "@hydrophobefireman/j-utils": "^2.0.2"
   },
   "scripts": {
     "start": "webpack-dev-server",

@@ -1,293 +1,179 @@
 const { minify } = require("terser");
 module.exports = minify(
   `(${function() {
-    function patchGlobalThis() {
-      if (typeof globalThis !== "undefined") return globalThis;
+    function t() {
+      if ("object" == typeof globalThis) return globalThis;
       Object.defineProperty(Object.prototype, "___this", {
-        get: function get() {
+        get: function() {
           return this;
         },
-        configurable: true
-      });
-      ___this.globalThis = ___this;
-      var r = ___this;
-      delete Object.prototype.___this;
-      return r;
+        configurable: !0
+      }),
+        (___this.globalThis = ___this);
+      var t = ___this;
+      return delete Object.prototype.___this, t;
     }
 
-    var global = patchGlobalThis();
+    var e,
+      n,
+      r,
+      o = t().Symbol || {},
+      i = {},
+      s = i.constructor,
+      u = i.hasOwnProperty,
+      a =
+        ("function" == typeof Promise
+          ? Promise.prototype.then.bind(Promise.resolve())
+          : setTimeout,
+        (function(t, e) {
+          return "Set" in e;
+        })(0, t())),
+      l = "__@@set",
+      f = function(t) {
+        return t != t;
+      },
+      h = function(t, e) {
+        return t === e || (f(t) && f(e));
+      };
 
-    var _Sym = global.Symbol || {};
-    function _instanceof(left, right) {
-      if (
-        right != null &&
-        typeof Symbol !== "undefined" &&
-        right[_Sym.hasInstance]
-      ) {
-        return !!right[_Sym.hasInstance](left);
-      } else {
-        return left instanceof right;
-      }
-    }
-
-    function _defineProperty(obj, key, value) {
-      if (key in obj) {
-        Object.defineProperty(obj, key, {
-          value: value,
-          enumerable: true,
-          configurable: true,
-          writable: true
-        });
-      } else {
-        obj[key] = value;
-      }
-      return obj;
-    }
-
-    function has(a, b) {
-      return a in b;
-    }
-
-    var emptyObj = {};
-
-    function isIterable(k) {
-      return k && !!k[_Sym.iterator];
-    }
-
-    var _Object = emptyObj.constructor;
-    var hasOwnProp = emptyObj.hasOwnProperty;
-    var HAS_SET = has("Set", global);
-    var s = "__@@set";
-
-    function _isNaN(k) {
-      return k !== k;
-    }
-
-    function _EqCheck(x, y) {
-      return x === y || (_isNaN(x) && _isNaN(y));
-    }
-
-    function normalizeNegativeZero(k) {
-      return k === 0 ? 0 : k;
-    }
-
-    var entries, values, keys;
-
-    if (typeof Symbol !== "undefined") {
-      function setKeyValIterator(set, isDup) {
-        var _obj;
-
-        var _ = set[s];
-        var i = 0;
-        var len = _.length;
-        var obj =
-          ((_obj = {}),
-          _defineProperty(_obj, _Sym.iterator, function() {
+    if ("undefined" != typeof Symbol) {
+      function c(t, e) {
+        var n = t[l],
+          r = 0,
+          o = n.length;
+        return {
+          [Symbol.iterator]: function() {
             return this;
-          }),
-          _defineProperty(_obj, "next", function next() {
-            if (i < len) {
-              var v = _[i++];
+          },
+          next: function() {
+            if (r < o) {
+              var t = n[r++];
               return {
-                value: isDup ? [v, v] : v,
-                done: false
+                value: e ? [t, t] : t,
+                done: !1
               };
             }
 
             return {
               value: void 0,
-              done: true
+              done: !0
             };
-          }),
-          _obj);
-        return obj;
+          }
+        };
       }
 
-      entries = function entries() {
-        return setKeyValIterator(this, true);
-      };
-
-      values = function values() {
-        return setKeyValIterator(this, false);
-      };
-
-      keys = function keys() {
-        return setKeyValIterator(this, false);
-      };
-    } else {
-      entries = keys = values = function values() {
+      (e = function() {
+        return c(this, !0);
+      }),
+        (n = function() {
+          return c(this, !1);
+        }),
+        (r = function() {
+          return c(this, !1);
+        });
+    } else
+      e = r = n = function() {
         console.warn("no symbol support");
       };
-    }
 
-    var symbolProps = {
-      keys: keys,
-      values: values,
-      entries: entries
-    };
-    var assign =
-      "assign" in _Object
-        ? _Object.assign
-        : function Object_assign(target) {
-            for (var i = 1; i < arguments.length; i++) {
-              var source = arguments[i];
+    var p = {
+        keys: r,
+        values: n,
+        entries: e
+      },
+      y =
+        "assign" in s
+          ? s.assign
+          : function(t) {
+              for (var e = 1; e < arguments.length; e++) {
+                var n = arguments[e];
 
-              for (var key in source) {
-                if (hasOwnProp.call(source, key)) {
-                  target[key] = source[key];
-                }
+                for (var r in n) u.call(n, r) && (t[r] = n[r]);
               }
+
+              return t;
+            },
+      b = function t(e, n) {
+        if (
+          ((function(t, e) {
+            if (
+              ((n = t),
+              !(null != (r = e) &&
+              "undefined" != typeof Symbol &&
+              r[Symbol.hasInstance]
+                ? r[Symbol.hasInstance](n)
+                : n instanceof r))
+            )
+              throw new TypeError("Cannot call a class as a function");
+            var n, r;
+          })(this, t),
+          !n && a)
+        )
+          return new Set(e);
+        (this[l] = []),
+          (function(t, e) {
+            if (null != e) {
+              if (
+                !(function(t) {
+                  return t && !!t[o.iterator];
+                })(e)
+              )
+                throw new Error("value:" + String(e) + " is not iterable");
+
+              for (var n = e.length, r = 0; r < n; r++) t.add(e[r]);
             }
-
-            return target;
-          };
-
-    function setPrototypeProps(FakeSet) {
-      FakeSet.prototype.add = function set(k) {
-        if (!this.has(k)) this[s].push(normalizeNegativeZero(k));
-        return this;
+          })(this, e);
       };
 
-      FakeSet.prototype.has = function has(key) {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+    !(function(t) {
+      (t.prototype.add = function(t) {
+        return (
+          this.has(t) ||
+            this[l].push(
+              (function(t) {
+                return 0 === t ? 0 : t;
+              })(t)
+            ),
+          this
+        );
+      }),
+        (t.prototype.has = function(t) {
+          for (var e = this[l], n = e.length, r = 0; r < n; r++)
+            if (h(e[r], t)) return !0;
 
-        try {
-          for (
-            var _iterator = this[s][_Sym.iterator](), _step;
-            !(_iteratorNormalCompletion = (_step = _iterator.next()).done);
-            _iteratorNormalCompletion = true
-          ) {
-            var i = _step.value;
-            if (_EqCheck(i, key)) return true;
+          return !1;
+        }),
+        (t.prototype.delete = function(t) {
+          var e = !1;
+          return (
+            (this[l] = this[l].filter(function(n) {
+              var r = !h(n, t);
+              return r || (e = !0), r;
+            })),
+            e
+          );
+        }),
+        (t.prototype.forEach = function(t, e) {
+          for (var n = this[l], r = n.length, o = 0; o < r; o++) {
+            var i = n[o];
+            e ? t.call(e, i, i, this) : t(i, i, this);
           }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return != null) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
+        }),
+        (t.prototype.clear = function() {
+          this[l].length = 0;
+        }),
+        Object.defineProperty(t.prototype, "size", {
+          enumerable: !1,
+          configurable: !0,
+          get: function() {
+            return this[l].length;
           }
-        }
-
-        return false;
-      };
-
-      FakeSet.prototype.delete = function del(k) {
-        var had = false;
-        this[s] = this[s].filter(function(x) {
-          var c = !_EqCheck(x, k);
-          if (!c) had = true;
-          return c;
-        });
-        return had;
-      };
-
-      FakeSet.prototype.forEach = function forEach(cb, that) {
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
-
-        try {
-          for (
-            var _iterator2 = this[s][_Sym.iterator](), _step2;
-            !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done);
-            _iteratorNormalCompletion2 = true
-          ) {
-            var arr = _step2.value;
-            var a = arr,
-              c = this;
-            that ? cb.call(that, a, a, c) : cb(a, a, c);
-          }
-        } catch (err) {
-          _didIteratorError2 = true;
-          _iteratorError2 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-              _iterator2.return();
-            }
-          } finally {
-            if (_didIteratorError2) {
-              throw _iteratorError2;
-            }
-          }
-        }
-      };
-
-      FakeSet.prototype.clear = function clear() {
-        return void (this[s].length = 0);
-      };
-
-      Object.defineProperty(FakeSet.prototype, "size", {
-        enumerable: false,
-        configurable: true,
-        get: function get() {
-          return this[s].length;
-        }
-      });
-      FakeSet.prototype[_Sym.iterator] = symbolProps.values;
-      FakeSet.prototype[_Sym.toStringTag] = "Set";
-      assign(FakeSet.prototype, symbolProps);
-    }
-
-    function _classCallCheck(instance, Constructor) {
-      if (!_instanceof(instance, Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-      }
-    }
-
-    function generateSet(fs, it) {
-      if (it == null) return;
-      if (!isIterable(it))
-        throw new Error("value:" + String(it) + " is not iterable");
-      var _iteratorNormalCompletion3 = true;
-      var _didIteratorError3 = false;
-      var _iteratorError3 = undefined;
-
-      try {
-        for (
-          var _iterator3 = it[_Sym.iterator](), _step3;
-          !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done);
-          _iteratorNormalCompletion3 = true
-        ) {
-          var k = _step3.value;
-          fs.add(k);
-        }
-      } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
-            _iterator3.return();
-          }
-        } finally {
-          if (_didIteratorError3) {
-            throw _iteratorError3;
-          }
-        }
-      }
-    }
-
-    var FakeSet = function FakeSet(iterable, forceUseCustomImplementation) {
-      _classCallCheck(this, FakeSet);
-
-      if (!forceUseCustomImplementation && HAS_SET) return new Set(iterable);
-      this[s] = [];
-      generateSet(this, iterable);
-    };
-
-    setPrototypeProps(FakeSet);
-    FakeSet[_Sym.species] = FakeSet;
-    window.__fshare = window.__fshare || {};
-    window.__fshare._Set = FakeSet;
+        }),
+        "undefined" != typeof Symbol &&
+          ((t.prototype[Symbol.iterator] = p.values),
+          (t.prototype[Symbol.toStringTag] = "Set")),
+        y(t.prototype, p);
+    })(b),
+      (b[Symbol.species] = b);
   }})()`
 ).code;
