@@ -1,4 +1,4 @@
-importScripts("precache-manifest.69a73232a314571c91ad7b8b13b2e2f1.js");
+importScripts("precache-manifest.715f262ca8bcd8f8b22c1031333100ee.js");
 
 const CSSFILES = [
   "https://fonts.pycode.tk/open-sans.css",
