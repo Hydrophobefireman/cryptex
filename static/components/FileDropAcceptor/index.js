@@ -94,7 +94,7 @@ export default class FileDropAcceptor extends Component {
         h("div", {
           class: attachIcon,
           style: {
-            backgrouclassndImage: `url(${attachIcon})`
+            backgroundImage: `url(${attachIcon})`
           }
         }),
         "Drag & drop or ",
