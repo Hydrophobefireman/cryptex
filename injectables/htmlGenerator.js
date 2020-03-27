@@ -62,7 +62,7 @@ module.exports.generateScripts = files => {
   const noModules = [];
   const vendorNomodules = [];
   const webPackDevServerScripts = [];
-  for (const { entry: _entry } of Object.values(files)) {
+  for (const _entry of files) {
     const entry = normalize(_entry);
     const isWP = iswebPackDevModule(entry);
     const legacy = isLegacy(entry) && !isWP;

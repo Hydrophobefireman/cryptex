@@ -8,7 +8,7 @@ const dssJS = require("dss-js");
 const defaultCSS = require("./static/app-unprocessed-css.js");
 const mode = "development";
 const { writeFileSync, mkdirSync } = require("fs");
-const { InjectManifest } = require("workbox-webpack-plugin");
+const { InjectManifest, GenerateSW } = require("workbox-webpack-plugin");
 // const mode = "production";
 const devOrProd = (a, b) => {
   return "production" === mode ? a : b;
@@ -131,8 +131,7 @@ module.exports = {
     }),
     new InjectManifest({
       swDest: "sw-stream.js",
-      swSrc: `${__dirname}/static/sw/sw-stream.js`,
-      importWorkboxFrom: "disabled"
+      swSrc: `${__dirname}/static/sw/sw-stream.js`
     })
   ]
 };

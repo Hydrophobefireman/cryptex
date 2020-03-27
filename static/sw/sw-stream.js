@@ -3,9 +3,7 @@ const CSSFILES = [
   "https://fonts.pycode.tk/@/open-sans/open-sans-v16-latin-ext_latin-600.woff2",
   "https://fonts.pycode.tk/@/open-sans/open-sans-v16-latin-ext_latin-regular.woff2"
 ];
-const files = (self.__precacheManifest || [])
-  .map(x => x.url)
-  .concat("/", CSSFILES);
+const files = (self.__WB_MANIFEST || []).map(x => x.url).concat("/", CSSFILES);
 const CACHE_VERSION = +new Date();
 const CURRENT_CACHES = {
   prefetch: `prefetch-cache-v${CACHE_VERSION}`

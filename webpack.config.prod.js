@@ -30,7 +30,7 @@ module.exports = {
     rules: [
       {
         test: /\.m?js$/,
-        exclude: /(node_modules)|(injectables)/,
+        exclude: /(node_modules)|(injectables)|(sw-stream.js)/,
         use: {
           loader: "babel-loader",
           options: {
@@ -133,8 +133,7 @@ module.exports = {
     }),
     new InjectManifest({
       swDest: "sw-stream.js",
-      swSrc: `${__dirname}/static/sw/sw-stream.js`,
-      importWorkboxFrom: "disabled"
+      swSrc: `${__dirname}/static/sw/sw-stream.js`
     })
   ]
 };

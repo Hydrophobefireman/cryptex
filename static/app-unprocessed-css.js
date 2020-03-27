@@ -1,7 +1,7 @@
 const obj = {
   prefixedStyles: [
     {
-      key: { prefix: "", selector: "html", global: true },
+      key: { selector: "html", global: true },
       props: { WebkitTapHighlightColor: "transparent" }
     },
     {
