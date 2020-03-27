@@ -92,9 +92,10 @@ export default class FileDropAcceptor extends Component {
         "div",
         { class: dashedBorder, ...this.getEventListeners() },
         h("div", {
-          class: attachIcon,
           style: {
-            backgrouclassndImage: `url(${attachIcon})`
+            backgroundImage: `url('${attachIcon}')`,
+            height: "24px",
+            width: "24px"
           }
         }),
         "Drag & drop or ",
