@@ -16,7 +16,7 @@ const devOrProd = (a, b) => {
 try {
   mkdirSync(__dirname + "/docs");
 } catch (e) {}
-writeFileSync(`${__dirname}/docs/check-sw`, +new Date());
+writeFileSync(`${__dirname}/docs/check-sw`, String(+new Date()));
 dssJS.evaluate(defaultCSS, "./static/_App.css");
 dssJS.getGlueCode("./static/css-data.js");
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
     contentBase: `${__dirname}/docs`,
     compress: !0,
     port: 4200,
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -44,37 +44,37 @@ module.exports = {
                     "last 2 Chrome versions",
                     "last 2 Safari versions",
                     "last 2 iOS versions",
-                    "last 2 Firefox versions"
-                  ]
-                }
-              ]
+                    "last 2 Firefox versions",
+                  ],
+                },
+              ],
             ],
             plugins: [
               "@babel/plugin-transform-runtime",
               "@babel/plugin-syntax-dynamic-import",
-              "@babel/plugin-proposal-class-properties"
-            ]
-          }
-        }
+              "@babel/plugin-proposal-class-properties",
+            ],
+          },
+        },
       },
       {
         test: /\.css$/,
         use: [
           { loader: MiniCssExtractPlugin.loader },
           {
-            loader: "css-loader"
+            loader: "css-loader",
           },
           {
             loader: "postcss-loader",
-            options: { ident: "postcss", plugins: [autoPrefixPlugin()] }
-          }
-        ]
+            options: { ident: "postcss", plugins: [autoPrefixPlugin()] },
+          },
+        ],
       },
       {
         test: /\.(png|jpg|gif|ico|svg)$/,
-        use: [{ loader: "url-loader", options: { fallback: "file-loader" } }]
-      }
-    ]
+        use: [{ loader: "url-loader", options: { fallback: "file-loader" } }],
+      },
+    ],
   },
   entry: `${__dirname}/static/App.js`,
   output: { path: `${__dirname}/docs`, filename: "[name]-[contenthash].js" },
@@ -82,8 +82,8 @@ module.exports = {
   optimization: {
     minimizer: devOrProd([new minifier({ parallel: !0 })], []),
     splitChunks: {
-      chunks: "all"
-    }
+      chunks: "all",
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -98,10 +98,10 @@ module.exports = {
           html5: !0,
           minifyCSS: !0,
           removeEmptyAttributes: !0,
-          removeRedundantAttributes: !0
+          removeRedundantAttributes: !0,
         },
         !1
-      )
+      ),
     }),
 
     new WebpackPwaManifest({
@@ -112,8 +112,8 @@ module.exports = {
       icons: [
         {
           src: `${__dirname}/icon-512x512.png`,
-          sizes: [72, 96, 128, 144, 152, 192, 256, 384, 512]
-        }
+          sizes: [72, 96, 128, 144, 152, 192, 256, 384, 512],
+        },
       ],
       inject: !0,
       lang: "en",
@@ -121,19 +121,19 @@ module.exports = {
       start_url: "/",
       short_name: "cryptex",
       theme_color: "#1976d2",
-      ios: true
+      ios: true,
     }),
     new MiniCssExtractPlugin({
       filename: "[name]-[contenthash].css",
-      chunkFilename: "[id]-[contenthash].css"
+      chunkFilename: "[id]-[contenthash].css",
     }),
     new StyleExtHtmlWebpackPlugin({
       minify: devOrProd(!0, !1),
-      position: "head-bottom"
+      position: "head-bottom",
     }),
     new InjectManifest({
       swDest: "sw-stream.js",
-      swSrc: `${__dirname}/static/sw/sw-stream.js`
-    })
-  ]
+      swSrc: `${__dirname}/static/sw/sw-stream.js`,
+    }),
+  ],
 };

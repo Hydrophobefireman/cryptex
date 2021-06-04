@@ -16,7 +16,7 @@ const devOrProd = (a, b) => {
 try {
   mkdirSync(__dirname + "/docs");
 } catch (e) {}
-writeFileSync(`${__dirname}/docs/check-sw`, +new Date());
+writeFileSync(`${__dirname}/docs/check-sw`, String(+new Date()));
 dssJS.evaluate(defaultCSS, "./static/_App.css");
 dssJS.getGlueCode("./static/css-data.js");
 module.exports = {
